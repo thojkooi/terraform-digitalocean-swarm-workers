@@ -1,9 +1,9 @@
-output "ip_adresses" {
+output "ipv4_adresses" {
   value       = ["${digitalocean_droplet.node.*.ipv4_address}"]
   description = "The nodes public ipv4 adresses"
 }
 
-output "private_ip_adresses" {
+output "ipv4_adresses_private" {
   value       = ["${digitalocean_droplet.node.*.ipv4_address_private}"]
   description = "The nodes private ipv4 adresses"
 }
