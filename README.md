@@ -2,6 +2,8 @@
 
 Terraform module to provision a Docker Swarm mode worker nodes to join a cluster using a private network on DigitalOcean.
 
+[![CircleCI](https://circleci.com/gh/thojkooi/terraform-digitalocean-swarm-workers.svg?style=svg)](https://circleci.com/gh/thojkooi/terraform-digitalocean-swarm-workers)
+
 - [Requirements](#requirements)
 - [Usage](#usage)
 
