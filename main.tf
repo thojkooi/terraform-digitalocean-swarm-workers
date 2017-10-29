@@ -29,44 +29,6 @@ resource "digitalocean_droplet" "node" {
     ]
   }
 
-  # Handle clean up / destroy worker node
-  # drain worker on destroy
-  provisioner "remote-exec" {
-    when = "destroy"
-
-    inline = [
-      "docker node update --availability drain ${self.name}",
-    ]
-
-    on_failure = "continue"
-
-    connection {
-      type        = "ssh"
-      user        = "${var.provision_user}"
-      private_key = "${file("${var.provision_ssh_key}")}"
-      host        = "${var.manager_public_ip}"
-    }
-  }
-
-  # remove node on destroy
-  provisioner "remote-exec" {
-    when = "destroy"
-
-    inline = [
-      "docker node rm --force ${self.name}",
-    ]
-
-    on_failure = "continue"
-
-    connection {
-      type        = "ssh"
-      user        = "${var.provision_user}"
-      private_key = "${file("${var.provision_ssh_key}")}"
-      host        = "${var.manager_public_ip}"
-    }
-  }
-
-  # leave swarm on destroy
   provisioner "remote-exec" {
     when = "destroy"
 
