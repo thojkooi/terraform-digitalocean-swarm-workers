@@ -73,3 +73,8 @@ variable "tags" {
   default     = []
   type        = "list"
 }
+
+variable "availability" {
+  description = "Availability of the node ('active'|'pause'|'drain')"
+  default     = "active"
+}
