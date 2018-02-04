@@ -9,7 +9,7 @@ Terraform module to provision a Docker Swarm mode worker nodes to join a cluster
 
 ## Requirements
 
-- Terraform >= 0.10.6
+- Terraform >= 0.11.2
 - Digitalocean account / API token with write access
 - SSH Keys added to your DigitalOcean account
 
@@ -21,7 +21,7 @@ module "workers" {
   source   = "github.com/thojkooi/terraform-digitalocean-swarm-workers"
   do_token = "${var.do_token}"
 
-  size            = "512mb"
+  size            = "s-1vcpu-1gb"
   name            = "web"
   region          = "ams3"
   domain          = "example.com"
