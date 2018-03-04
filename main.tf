@@ -25,7 +25,7 @@ resource "digitalocean_droplet" "node" {
 
   provisioner "remote-exec" {
     inline = [
-      "while [ ! $(docker info) ]; do sleep 2; done",
+      "while [ ! $(sudo docker info) ]; do sleep 2; done",
       "sudo docker swarm join --token ${var.join_token} --availability ${var.availability} ${var.manager_private_ip}:2377",
     ]
   }
