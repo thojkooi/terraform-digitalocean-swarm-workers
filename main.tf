@@ -1,6 +1,11 @@
-provider "digitalocean" {
-  version = "~> 0.1"
-  token   = "${var.do_token}"
+data "template_file" "join_cluster_as_worker" {
+  template = "${file("${path.module}/scripts/join.sh")}"
+
+  vars {
+    docker_cmd         = "${var.docker_cmd}"
+    availability       = "${var.availability}"
+    manager_private_ip = "${var.manager_private_ip}"
+  }
 }
 
 resource "digitalocean_droplet" "node" {
@@ -23,10 +28,15 @@ resource "digitalocean_droplet" "node" {
     timeout     = "2m"
   }
 
+  provisioner "file" {
+    content     = "${data.template_file.join_cluster_as_worker.rendered}"
+    destination = "/tmp/join_cluster_as_worker.sh"
+  }
+
   provisioner "remote-exec" {
     inline = [
-      "while [ ! $(sudo docker info) ]; do sleep 2; done",
-      "sudo docker swarm join --token ${var.join_token} --availability ${var.availability} ${var.manager_private_ip}:2377",
+      "chmod +x /tmp/join_cluster_as_worker.sh",
+      "/tmp/join_cluster_as_worker.sh ${var.join_token}",
     ]
   }
 

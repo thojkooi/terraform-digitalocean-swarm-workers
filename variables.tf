@@ -1,17 +1,9 @@
-variable "do_token" {
-  description = "DigitalOcean API token with read/write permissions"
-}
-
 variable "domain" {
   description = "Domain name used in droplet hostnames, e.g example.com"
 }
 
 variable "join_token" {
   description = "Join token for the nodes"
-}
-
-variable "manager_public_ip" {
-  description = "Public ip adress of a manager node, used to unregister a node in the Docker swarm cluster on destroy"
 }
 
 variable "manager_private_ip" {
@@ -66,6 +58,11 @@ variable "name" {
 variable "user_data" {
   description = "User data content for worker nodes. Use this for installing a configuration management tool, such as Puppet or installing Docker"
   default     = ""
+}
+
+variable "docker_cmd" {
+  description = "Docker command"
+  default     = "sudo docker"
 }
 
 variable "tags" {
